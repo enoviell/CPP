@@ -1,15 +1,13 @@
 #include "Ice.hpp"
 
-Ice::Ice()
+Ice::Ice() : AMateria("ice")
 {
     std::cout << "Ice default constructor called" << std::endl;
-    this->_type = "ice";
 }
 
-Ice::Ice(const Ice &copy)
+Ice::Ice(const Ice &copy): AMateria(copy._type)
 {
     std::cout << "Ice copy constructor called" << std::endl;
-    this->_type = copy.getType();
 }
 
 Ice &Ice::operator=(const Ice &copy)

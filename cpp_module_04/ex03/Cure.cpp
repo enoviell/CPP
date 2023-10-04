@@ -6,10 +6,10 @@ Cure::Cure()
     this->_type = "cure";
 }
 
-Cure::Cure(const Cure &copy)
+Cure::Cure(const Cure &copy):AMateria(copy._type)
 {
     std::cout << "Cure copy constructor called" << std::endl;
-    this->_type = copy.getType();
+
 }
 
 Cure &Cure::operator=(const Cure &copy)
