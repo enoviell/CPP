@@ -1,0 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Harl.hpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emanuele <emanuele@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/21 12:07:25 by emanuele          #+#    #+#             */
+/*   Updated: 2023/09/21 14:51:59 by emanuele         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+#ifndef HARL_HPP
+#define HARL_HPP
+#include<iostream>
+#include<string.h>
+
+
+class Harl
+{
+private:
+    void debug(void);
+    void info(void);
+    void warning(void);
+    void error(void);
+    public:
+    void complain(std::string level);
+    Harl();
+    ~Harl();
+    
+};
+
+
+
+#endif
