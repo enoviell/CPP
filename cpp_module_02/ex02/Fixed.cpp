@@ -6,7 +6,7 @@
 /*   By: emanuele <emanuele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 18:05:27 by emanuele          #+#    #+#             */
-/*   Updated: 2023/09/25 12:08:35 by emanuele         ###   ########.fr       */
+/*   Updated: 2023/10/06 10:57:08 by emanuele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ Fixed Fixed::operator*(const Fixed&molt)const{
 Fixed Fixed::operator/(const Fixed &div)const{
     return(this->toFloat()/div.toFloat());
 }
-Fixed				&Fixed::operator++(void)
+Fixed				&Fixed::operator++(int )
 {
 	this->_fixedp++;
 	return (*this);

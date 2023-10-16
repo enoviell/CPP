@@ -28,10 +28,10 @@ public:
     Fixed               operator-(const Fixed &sub)const;   
     Fixed               operator*(const Fixed &molt)const;   
     Fixed               operator/(const Fixed &div)const;   
-    Fixed				&Fixed::operator++(void);
-    Fixed				Fixed::operator++(int);
-    Fixed				&Fixed::operator--(void);
-    Fixed				Fixed::operator--(int);
+    Fixed				&operator++(void);
+    Fixed				operator++(int);
+    Fixed				&operator--(void);
+    Fixed				operator--(int);
     Fixed               &min(Fixed &x, Fixed &y);
     Fixed               &max(Fixed &x, Fixed &y);
     static const Fixed  &min(const Fixed &x, const Fixed &y);
