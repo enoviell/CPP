@@ -1,9 +1,11 @@
-#include "bureaucrat.hpp"
+#include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat()
+Bureaucrat::Bureaucrat( Bureaucrat const &obj)
 {
-	std::cout << "Base Bureaucrat costructor called" << std::endl;
+	*this = obj;
+	return ;
 }
+
 Bureaucrat::Bureaucrat(std::string name, int i)
 	: name(name)
 {
@@ -23,7 +25,14 @@ Bureaucrat::Bureaucrat(std::string name, int i)
 		std::cerr << e.what() << std::endl;
 	}
 }
-
+Bureaucrat &Bureaucrat::operator=(Bureaucrat const &copy)
+{
+	if (this == &copy)
+		return (*this);
+	this->grade = copy.getGrade();
+	this->name = copy.getName();
+	return (*this);
+}
 Bureaucrat::~Bureaucrat()
 {
 	std::cout << "Bureaucrat distructor called" << std::endl;
@@ -44,7 +53,7 @@ void		Bureaucrat::setGrade(int i)
 	this->grade = i;
 }
 
-void	Bureaucrat::signForm(Form &to_sign)
+void	Bureaucrat::signForm(AForm &to_sign)
 {
 	if (this->grade < to_sign.getGradeToSign())
 	{
@@ -61,32 +70,36 @@ std::ostream	&operator<<(std::ostream &os, Bureaucrat &first)
 	return (os);
 }
 
-int Bureaucrat::operator++(int grade)
-{
-	try{
-		if (grade <= 1)
-			throw (gradeTooHighException());
-		else
-			this->setGrade(grade);
-	}
-	catch (gradeTooHighException &e){
-		std::cerr << e.what() << std::endl;
-	}
-	grade--;
-	return (0);
+void Bureaucrat::operator++() {
+    try {
+        if (grade <= 1)
+            throw gradeTooHighException();
+        else
+            grade--;
+    } catch (gradeTooHighException &e) {
+        std::cerr << e.what() << std::endl;
+    }
 }
 
-int Bureaucrat::operator--(int grade)
+void Bureaucrat::operator--() {
+    try {
+        if (grade >= 150)
+            throw gradeTooLowException();
+        else
+            grade++;
+    } catch (gradeTooLowException &e) {
+        std::cerr << e.what() << std::endl;
+    }
+}
+
+void    Bureaucrat::executeForm( AForm const  &form )
 {
-	try{
-		if (grade >=150)
-			throw (gradeTooLowException());
-		else
-			this->setGrade(grade);
-	}
-	catch (gradeTooLowException &e){
-		std::cerr << e.what() << std::endl;
-	}
-	grade++;
-	return (0);
+    try
+	{
+        form.execute(*this);
+    }
+	catch (std::exception& e)
+	{
+        std::cout << name << " couldn't execute " << form.getName() << " because " << e.what() << std::endl;
+    }
 }

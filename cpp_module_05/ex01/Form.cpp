@@ -1,41 +1,41 @@
-#include "form.hpp"
+#include "Form.hpp"
 
 Form::Form()
 	:gradeRequiredToExecute(0), gradeRequiredToSign(0)
 {
 	std::cout << "base constructor called" << std::endl;
 }
-Form::Form(std::string name, int to_sign, int to_exec)
+Form::Form(std::string const &name, int to_sign, int to_exec)
 	:name(name), is_signed(0), gradeRequiredToSign(to_sign), gradeRequiredToExecute(to_exec)
 {
 	std::cout << "Form constructor called" << std::endl;
 	try
 	{
 		if (to_sign < 1)
-			throw (gradeToHighException());
+			throw (gradeTooHighException());
 		else if (to_sign > 150)
-			throw (gradeToLowException());
+			throw (gradeTooLowException());
 	}
-	catch (gradeToHighException &e)
+	catch (gradeTooHighException &e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-	catch (gradeToLowException &e)
+	catch (gradeTooLowException &e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
 	try
 	{
 		if (to_exec < 1)
-			throw (gradeToHighException());
+			throw (gradeTooHighException());
 		else if (to_exec > 150)
-			throw (gradeToLowException());
+			throw (gradeTooLowException());
 	}
-	catch (gradeToHighException &e)
+	catch (gradeTooHighException &e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
-	catch (gradeToLowException &e)
+	catch (gradeTooLowException &e)
 	{
 		std::cerr << e.what() << std::endl;
 	}
@@ -50,7 +50,7 @@ std::string	Form::getName() const
 	return (this->name);
 }
 
-int			Form::getSigned()
+bool			Form::getSigned() const
 {
 	return (this->is_signed);
 }
@@ -65,25 +65,25 @@ int			Form::getGradeToExecute() const
 	return (this->gradeRequiredToExecute);
 }
 
-void		Form::beSigned(Bureaucrat designed)
-{
-	try{
-	if (this->is_signed == 0 && this->gradeRequiredToSign > designed.getGrade())
-		this->is_signed = 1;
-	else
-		throw (gradeToHighException());
-	}
-	catch (gradeToHighException &e){
-		std::cerr << "form can't be signed cause his " << e.what() << std::endl;
-	}
-}
-
 void		Form::setSigned()
 {
 	this->is_signed = 1;
 }
 
-
+bool Form::beSigned(Bureaucrat const &designed)
+{
+	if (this->getSigned())
+	{
+		std::cout<<"Form" << this->name << "is already signed"<<std::endl;
+		return(false);
+	}
+	if (this->is_signed < designed.getGrade())
+		throw (Form::gradeTooLowException());
+	this->is_signed = true;
+	return(true);
+	
+	
+}
 
 std::ostream	&operator<<(std::ostream &os, Form &module)
 {

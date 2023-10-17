@@ -1,8 +1,9 @@
-#include "bureaucrat.hpp"
+#include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat()
+Bureaucrat::Bureaucrat(Bureaucrat const &obj): name(obj.getName())
 {
-	std::cout << "Base Bureaucrat costructor called" << std::endl;
+	*this = obj;
+	return ;
 }
 Bureaucrat::Bureaucrat(std::string name, int i)
 	: name(name)
@@ -28,6 +29,14 @@ Bureaucrat::Bureaucrat(std::string name, int i)
 Bureaucrat::~Bureaucrat()
 {
 	std::cout << "Bureaucrat distructor called" << std::endl;
+}
+
+Bureaucrat &Bureaucrat::operator=(Bureaucrat const &copy)
+{
+	if (this == &copy)
+		return (*this);
+	this->grade = copy.getGrade();
+	return (*this);
 }
 std::string	Bureaucrat::getName() const
 {

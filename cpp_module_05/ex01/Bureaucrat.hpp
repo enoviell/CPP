@@ -3,22 +3,29 @@
 
 # include <iostream>
 # include <string>
+# include "Form.hpp"
+#include <exception>
+
+class Form;
 
 class Bureaucrat
 {
 	protected:
-		const	std::string name;
+		std::string name;
 		int		grade;
 	
 	public:
-		Bureaucrat();
+		Bureaucrat(Bureaucrat const &obj);
 		Bureaucrat(std::string name, int i);
 		~Bureaucrat();
+		Bureaucrat &operator=(Bureaucrat const &copy);
 		std::string	getName() const;
 		int			getGrade() const;
 		void		setGrade(int i);
-		int			operator++(int grade);
-		int			operator--(int grade);
+		int			error(int i);
+		void        operator++() ;
+		void        operator--(); 
+		void		signForm(Form &to_sign);
 		class gradeTooHighException : public std::exception
 		{
 			public:
@@ -35,6 +42,7 @@ class Bureaucrat
 					return ("grade is too low");
 				}
 		};
+
 };
 
 std::ostream	&operator<<(std::ostream os, const Bureaucrat &first);
