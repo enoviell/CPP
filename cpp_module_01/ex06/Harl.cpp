@@ -6,7 +6,7 @@
 /*   By: emanuele <emanuele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 12:12:46 by emanuele          #+#    #+#             */
-/*   Updated: 2023/10/03 17:02:12 by emanuele         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:24:02 by emanuele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,30 +68,29 @@ void Harl::complain(std::string level)
         std::cout<<"INSERT VALID LEVEL"<<std::endl;
    }
 
-    while(k<4 && flag==1)
-    {
-        switch(k)
-        {
-            
-            case 0: 
-                debug();
-                k++;     
-                continue;
-            case 1: 
-                info();
-                k++;
-                continue;
-            case 2: 
-                warning();
-                k++;
-                continue;
-            case 3:
-                error();
-                k++;
-                break;
-            default: 
-                break;
-      
-        }
+   while (k < 4 && flag == 1)
+   {
+       switch (k)
+       {
+
+       case 0:
+           debug();
+           k++;
+           continue;
+       case 1:
+           info();
+           k++;
+           continue;
+       case 2:
+           warning();
+           k++;
+           continue;
+       case 3:
+           error();
+           k++;
+           break;
+       default:
+           break;
+       }
     }
 }
