@@ -16,6 +16,8 @@ class Span
             void addNumber(int number);
             int shortestSpan();
             int longestSpan();
+            template<typename InputIterator>
+            void addNumbers(InputIterator begin, InputIterator end);
     public: 
             class Elementexception:public std::exception
             {
@@ -28,4 +30,13 @@ class Span
         unsigned int _N;
         std::vector<int> vector;
 };
+template<typename InputIterator>
+ void Span::addNumbers(InputIterator begin,InputIterator end)
+{
+ while(begin != end){
+       addNumber(*begin);
+        ++begin;
+    }
+}
+
 #endif
