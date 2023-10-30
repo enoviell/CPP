@@ -64,7 +64,7 @@ void BitcoinExchange::loadFile(const std::string &filename) {
         // Utilizza "|" come delimitatore e considera spazi prima e dopo
         if (std::getline(iss >> std::ws, data.date, '|') && (iss >> data.rate)) {
             // Verifica se il tasso di cambio è un numero valido
-            if (data.rate <= 0 || data.rate > 1000 ) {
+            if (data.rate < 0 || data.rate > 1000 ) {
                 std::cerr << "Error: Invalid value: " << data.rate << ". Valid values must be a positive integer or a float between 0 and 1000." << std::endl;
                 continue;
             }
@@ -76,7 +76,8 @@ void BitcoinExchange::loadFile(const std::string &filename) {
             }
 
             // Aggiungi i dati convertiti solo se la riga è corretta
-            toConvertData[data.date] = data.rate;
+            // Insert into toConvertData using insert function for multimap
+            toConvertData.insert(std::make_pair(data.date, data.rate));
         } else {
             std::cerr << "Error: invalid line in file " << filename << std::endl;
         }
@@ -162,7 +163,7 @@ void BitcoinExchange::exchange() {
         double exchangeRate = getExchangeRate(data.first);
         if (exchangeRate >= 0) {
             double result = data.second * exchangeRate;
-            printExchangeResult(data.first, data.second, exchangeRate, result);
+           printExchangeResult(data.first, data.second, exchangeRate, result);
         }
     }
 }

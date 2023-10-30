@@ -25,8 +25,8 @@ void loadFile(const std::string& filename);
 void exchange() ;
 
 private:
-std::map<std::string, float> bitcoinData;
-std::map<std::string, double> toConvertData;
+std::map<std::string, double> bitcoinData;
+std::multimap<std::string, double> toConvertData;
 bool isValidDate(const std::string& date);
 double getExchangeRate(const std::string& date);
 void printExchangeResult(const std::string& date, double quantity, double rate, double result);
