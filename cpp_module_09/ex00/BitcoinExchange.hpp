@@ -31,4 +31,4 @@ bool isValidDate(const std::string& date);
 double getExchangeRate(const std::string& date);
 void printExchangeResult(const std::string& date, double quantity, double rate, double result);
 };
-#endif // BITCOIN_EXCHANGE_HPP_
+#endif
