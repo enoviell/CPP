@@ -16,36 +16,50 @@
 
 
 // Fusione in-place di due sottoarray ordinati
+
 template<typename T>
-void merge_in_place(T &array, int sx, int median, int dx)
+void merge_in_place(T &arr, int left, int mid, int right)
 {
-    int i = sx, j = median + 1, k = sx;
+    int index_left, index_right, index_main;
+    int size_left = mid - left + 1;
+    int size_right = right - mid;
+    int left_array[size_left], right_array[size_right];
 
-    while (i <= median && j <= dx) {
-        if (array[i] <= array[j]) {
-            array[k] = array[i];
-            i++;
-        } else {
-            array[k] = array[j];
-            j++;
+    for (index_left = 0; index_left < size_left; index_left++)
+        left_array[index_left] = arr[left + index_left];
+    for (index_right = 0; index_right < size_right; index_right++)
+        right_array[index_right] = arr[mid + 1 + index_right];
+    index_left = 0;
+    index_right = 0;
+    index_main = left;
+    while (index_left < size_left && index_right < size_right)
+    {
+        if (left_array[index_left] <= right_array[index_right])
+        {
+            arr[index_main] = left_array[index_left];
+            index_left++;
         }
-        k++;
+        else
+        {
+            arr[index_main] = right_array[index_right];
+            index_right++;
+        }
+        index_main++;
     }
-
-    // Copia gli elementi rimanenti del sottoarray sinistro
-    while (i <= median) {
-        array[k] = array[i];
-        i++;
-        k++;
+    while (index_left < size_left)
+    {
+        arr[index_main] = left_array[index_left];
+        index_left++;
+        index_main++;
     }
-
-    // Copia gli elementi rimanenti del sottoarray destro
-    while (j <= dx) {
-        array[k] = array[j];
-        j++;
-        k++;
+    while (index_right < size_right)
+    {
+        arr[index_main] = right_array[index_right];
+        index_right++;
+        index_main++;
     }
 }
+
 
 template<typename T>
 void insectionsort(T& num, int sx, int dx)

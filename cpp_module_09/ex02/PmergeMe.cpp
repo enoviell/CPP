@@ -66,7 +66,7 @@ void	PmergeMe::sort_4_vettor()
     struct timeval time;
 
     this->start = get_ts(time);
-    mergeinsection(this->vettor, 0, this->vettor.size() - 1, 14);
+    mergeinsection(this->vettor, 0, this->vettor.size() - 1, 4);
     this->end = get_ts(time);
     std::cout << "\n sorted numbers: ";
     while ((unsigned long)++i < this->vettor.size())
@@ -84,10 +84,10 @@ void	PmergeMe::sort_4_deque()
     struct timeval time;
 
     this->start = get_ts(time);
-    mergeinsection(this->lista, 0, this->lista.size() - 1, 14);
+    mergeinsection(this->lista, 0, this->lista.size() - 1, 4);
     this->end = get_ts(time);
     std::cout << "\n sorted numbers : ";
-    while ((unsigned long)++i < this->vettor.size())
+    while ((unsigned long)++i < this->lista.size())
         std::cout << this->lista[i] << " ";
     std::cout << std::endl;
     if (sorted(this->lista))
@@ -95,3 +95,21 @@ void	PmergeMe::sort_4_deque()
     else
         std::cout << "Error: lista not sorted\n";
 }
+
+PmergeMe::PmergeMe(const PmergeMe &copy) {
+    vettor = copy.vettor;
+    lista = copy.lista;
+    start = copy.start;
+    end = copy.end;
+}
+
+PmergeMe& PmergeMe::operator=(const PmergeMe &copy) {
+    if (this != &copy) {
+        vettor = copy.vettor;
+        lista = copy.lista;
+        start = copy.start;
+        end = copy.end;
+    }
+    return *this;
+}
+

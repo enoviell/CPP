@@ -159,7 +159,7 @@ void BitcoinExchange::printExchangeResult(const std::string& date, double quanti
 }
 
 void BitcoinExchange::exchange() {
-    for (const auto& data : toConvertData) {
+    for (const std::pair<std::string, double> &data : toConvertData) {
         double exchangeRate = getExchangeRate(data.first);
         if (exchangeRate >= 0) {
             double result = data.second * exchangeRate;

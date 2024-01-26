@@ -3,27 +3,28 @@
 
 #include <iostream>
 #include <stack>
+#include <cstdlib> // for atoi
+#include <cstring>
 
 class RPN {
 private:
-    std::stack<long int> toExecute;
+    std::stack<int> numbers;
 
 public:
-    RPN();
-    RPN(const RPN &toCopy);
-    RPN& operator=(const RPN &toCopy);
-    ~RPN();
-    long int getResult();
-    void ordering(char *toOrder);
-    void executing(char operation);
+    RPN() ;
+    RPN(const RPN &other) ;
+    RPN & operator=(const RPN &other);
+    ~RPN() ;
+
+    long int evaluate(const char *expression);
     class rpnException : public std::exception {
     public:
         const char *what() const throw() {
-            return"Error: bad input";
+            return "Error: bad input";
         }
     };
-    class InfException : public std::exception{
-         public:
+    class InfException : public std::exception {
+    public:
         const char *what() const throw() {
             return "∞";
         }

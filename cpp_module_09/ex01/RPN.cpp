@@ -1,83 +1,63 @@
 #include "RPN.hpp"
 
+
 RPN::RPN() {}
 
-RPN::RPN(const RPN &toCopy) {
-    toExecute = toCopy.toExecute;
+RPN::RPN(const RPN &other) {
 }
 
-RPN& RPN::operator=(const RPN &toCopy) {
-    if (this != &toCopy) {
-        toExecute = toCopy.toExecute;
-    }
+RPN& RPN::operator=(const RPN &other) {
     return *this;
 }
 
 RPN::~RPN() {}
-long int RPN::getResult() {
-        return toExecute.top();
-}
 
-void RPN::ordering( char *toOrder) {
-    try {
-        while (*toOrder != '\0') {
-            if (*toOrder >='0' && *toOrder <='9' && *(toOrder+1) == ' ') {
-                toExecute.push(atoi(toOrder));
-                while (*toOrder >='0' && *toOrder <='9') {
-                    ++toOrder;
+
+
+long int RPN::evaluate(const char *expression) {
+    const char *token = strtok(const_cast<char*>(expression), " ");
+    while (token != NULL) {
+        try {
+            if (isdigit(token[0])) {
+                numbers.push(atoi(token));
+            } else if (token[0] == '+' || token[0] == '-' || token[0] == '*' || token[0] == '/') {
+                if (numbers.size() < 2) {
+                    throw rpnException();
                 }
-            } else if (*toOrder == '+' || *toOrder == '-' || *toOrder == '*' || *toOrder == '/') {
-                executing(*toOrder);
-            } else if (*toOrder == ' ') {
-                continue;
+                int b = numbers.top();
+                numbers.pop();
+                int a = numbers.top();
+                numbers.pop();
+                switch (token[0]) {
+                    case '+':
+                        numbers.push(a + b);
+                        break;
+                    case '-':
+                        numbers.push(a - b);
+                        break;
+                    case '*':
+                        numbers.push(a * b);
+                        break;
+                    case '/':
+                        if (b == 0) {
+                            throw InfException();
+                        }
+                        numbers.push(a / b);
+                        break;
+                    default:
+                        throw rpnException();
+                }
             } else {
                 throw rpnException();
             }
-            ++toOrder;
+        } catch (std::exception &e) {
+            std::cerr << e.what() << std::endl;
+            exit(1);
         }
-    } catch (rpnException &e) {
-        std::cerr << e.what() << std::endl;
-        exit(1);
+        token = strtok(NULL, " ");
     }
-}
-
-void RPN::executing(char operation) {
-    try {
-        if (toExecute.size() != 2) {
-            throw rpnException();
-        } else {
-            int i = toExecute.top();
-            toExecute.pop();
-            int j = toExecute.top();
-            toExecute.pop();
-
-            switch (operation) {
-                case '+':
-                    toExecute.push(j + i);
-                    break;
-                case '*':
-                    toExecute.push(j * i);
-                    break;
-                case '-':
-                    toExecute.push(j - i);
-                    break;
-                case '/':
-                    if (i == 0) {
-                    throw InfException();
-                    }
-                    else 
-                        toExecute.push(j / i);
-                    break;
-                default:
-                    throw rpnException();
-            }
-        }
-    } catch (rpnException &e) {
-        std::cerr << e.what() << std::endl;
-        exit(1);
+    if (numbers.size() != 1) {
+        throw rpnException();
     }
-    catch (InfException &e){
-        std::cout<<e.what()<<std::endl;
-        exit(0);
-    }
+    return numbers.top();
 }
